@@ -1,24 +1,20 @@
 # from django.http import HttpResponse
 from django.shortcuts import render
+from utils.recipes.factory import make_recipe
 
 # Create your views here.
+
+
 def home(request):
-    """HttpResponse function"""
-    print(request)
-    # return HttpResponse("Home")
     return render(request, 'recipes/pages/home.html', context={
-        'name': 'Plínio Gimenez',
+        'recipes': [make_recipe() for _ in range(10)],
     })
     # return render(request, 'global/home.html')
 
-# def about(request):
-#     """HttpResponse function"""
-#     print(request)
-#     return HttpResponse("Sobre")
 
-
-# def contact(request):
-#     """HttpResponse function"""
-#     print(request)
-#     # return HttpResponse("Contato")
-#     return render(request, 'recipes/contato.html')
+def recipe(request, id):
+    return render(request, 'recipes/pages/recipe-view.html', context={
+        'recipe': make_recipe(),
+        'is_detail_page': True,
+    })
+    # return render(request, 'global/home.html')
